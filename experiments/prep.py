@@ -270,117 +270,118 @@ def cmc(data):
     return data.values.astype(float), ncat
 
 
-def get_data(name):
+def get_data(name, folder = '../data'):
+    """folder: what folder the data is in compared to the caller, eg. 'data/'"""
     if 'wine' in name:
-        data_red = pd.read_csv('../data/winequality_red.csv')
-        data_white = pd.read_csv('../data/winequality_white.csv')
+        data_red = pd.read_csv(f'{folder}winequality_red.csv')
+        data_white = pd.read_csv(f'{folder}winequality_white.csv')
         data = pd.concat([data_red, data_white]).values
         data[:, -1] = np.where(data[:, -1] <= 6, 0, 1)
         ncat = learncats(data, classcol=data.shape[1]-1)
     elif 'bank' in name:
-        data = pd.read_csv('../data/bank-additional-full.csv', sep=';')
+        data = pd.read_csv(f'{folder}bank-additional-full.csv', sep=';')
         data, ncat = bank(data)
     elif 'segment' in name:
-        data = pd.read_csv('../data/segment.csv')
+        data = pd.read_csv(f'{folder}segment.csv')
         data, ncat = segment(data)
     elif 'german' in name:
-        data = pd.read_csv('../data/german.csv', sep=' ', header=None)
+        data = pd.read_csv(f'{folder}german.csv', sep=' ', header=None)
         data, ncat = german(data)
     elif 'vehicle' in name:
-        data = pd.read_csv('../data/vehicle.csv')
+        data = pd.read_csv(f'{folder}vehicle.csv')
         data['Class'] = get_dummies(data['Class'])
         ncat = np.ones(data.shape[1])
         ncat[-1] = len(np.unique(data['Class']))
         data = data.values.astype(float)
     elif 'vowel' in name:
-        data = pd.read_csv('../data/vowel.csv')
+        data = pd.read_csv(f'{folder}vowel.csv')
         data, ncat = vowel(data)
     elif 'authent' in name:
-        data = pd.read_csv('../data/authent.csv')
+        data = pd.read_csv(f'{folder}authent.csv')
         data['Class'] = get_dummies(data['Class'])
         ncat = learncats(data.values).astype(int)
         data = data.values.astype(float)
     elif 'diabetes' in name:
-        data = pd.read_csv('../data/diabetes.csv')
+        data = pd.read_csv(f'{folder}diabetes.csv')
         data['class'] = get_dummies(data['class'])
         ncat = learncats(data.values,
                          continuous_ids=[0] # Force first variable to be continuous
                          ).astype(int)
         data = data.values.astype(float)
     elif 'cmc' in name:
-        data = pd.read_csv('../data/cmc.csv')
+        data = pd.read_csv(f'{folder}cmc.csv')
         data, ncat = cmc(data)
     elif 'electricity' in name:
-        data = pd.read_csv('../data/electricity.csv')
+        data = pd.read_csv(f'{folder}electricity.csv')
         data, ncat = electricity(data)
     elif 'gesture' in name:
-        data = pd.read_csv('../data/gesture.csv')
+        data = pd.read_csv(f'{folder}gesture.csv')
         data['Phase'] = get_dummies(data['Phase'])
         data = data.values.astype(float)
         ncat = np.ones(data.shape[1])
         ncat[-1] = 5
     elif 'breast' in name:
-        data = pd.read_csv('../data/wdbc.csv')
+        data = pd.read_csv(f'{folder}wdbc.csv')
         data['Class'] = get_dummies(data['Class'])
         data = data.values.astype(float)
         ncat = np.ones(data.shape[1])
         ncat[-1] = 2
     elif 'krvskp' in name:
-        data = pd.read_csv('../data/kr-vs-kp.csv')
+        data = pd.read_csv(f'{folder}kr-vs-kp.csv')
         data = get_dummies(data)
         ncat = learncats(data.values)
         data = data.values.astype(float)
     elif 'dna' in name:
-        data = pd.read_csv('../data/dna.csv')
+        data = pd.read_csv(f'{folder}dna.csv')
         data = get_dummies(data).values.astype(float)
         ncat = learncats(data)
     elif 'robot' in name:
-        data = pd.read_csv('../data/robot.csv')
+        data = pd.read_csv(f'{folder}robot.csv')
         data['Class'] = get_dummies(data['Class'])
         data = data.values.astype(float)
         ncat = learncats(data)
     elif 'mice' in name:
-        data = pd.read_csv('../data/miceprotein.csv')
+        data = pd.read_csv(f'{folder}miceprotein.csv')
         data['class'] = get_dummies(data['class'])
         data = data.replace('?', np.nan)
         data = data.drop(['MouseID', 'Genotype', 'Treatment', 'Behavior'], axis=1)
         data = data.values.astype(float)
         ncat = learncats(data)
     elif 'dresses' in name:
-        data = pd.read_csv('../data/dresses.csv')
+        data = pd.read_csv(f'{folder}dresses.csv')
         data = data.replace('?', np.nan)
         data = get_dummies(data)
         data = data.values.astype(float)
         data[data < 0] = np.nan
         ncat = learncats(data)
     elif 'texture' in name:
-        data = pd.read_csv('../data/texture.csv')
+        data = pd.read_csv(f'{folder}texture.csv')
         data['Class'] = get_dummies(data['Class'])
         data = data.values.astype(float)
         ncat = np.ones(data.shape[1])
         ncat[-1] = 11
     elif 'splice' in name:
-        data = pd.read_csv('../data/splice.csv')
+        data = pd.read_csv(f'{folder}splice.csv')
         data = data.drop('Instance_name', axis=1)
         data = get_dummies(data).values.astype(float)
         ncat = learncats(data)
     elif 'jungle' in name:
-        data = pd.read_csv('../data/jungle.csv')
+        data = pd.read_csv(f'{folder}jungle.csv')
         data = get_dummies(data)
         data = data.values.astype(float)
         ncat = learncats(data)
     elif 'phishing' in name:
-        data = pd.read_csv('../data/phishing.csv')
+        data = pd.read_csv(f'{folder}phishing.csv')
         data = get_dummies(data)
         data = data.values.astype(float)
         ncat = learncats(data)
     elif 'fashion' in name:
-        data = pd.read_csv('../data/fashion.csv')
+        data = pd.read_csv(f'{folder}fashion.csv')
         data = data.values.astype(np.float64)
         ncat = np.ones(data.shape[1]).astype(np.int64)
         ncat[-1] = 10
     elif 'mnist' in name:
-        data = pd.read_csv('../data/mnist.csv')
+        data = pd.read_csv(f'{folder}mnist.csv')
         data = data.values.astype(np.float64)
         ncat = np.ones(data.shape[1]).astype(np.int64)
         ncat[-1] = 10
