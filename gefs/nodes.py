@@ -1,6 +1,6 @@
 from collections import OrderedDict
-from numba import njit, boolean, int64, float64, deferred_type, optional, types, prange
-from numba.experimental import jitclass
+from numba import njit, boolean, int64, float64, deferred_type, optional, types, prange, jitclass
+#from numba.experimental import jitclass
 import numba as nb
 import numpy as np
 

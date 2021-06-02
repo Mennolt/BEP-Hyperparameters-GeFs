@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from math import erf, floor
-from numba import njit, int64, float64, optional, prange, deferred_type, types, boolean
-from numba.experimental import jitclass
+from numba import njit, int64, float64, optional, prange, deferred_type, types, boolean, jitclass
+#from numba.experimental import jitclass
 import numpy as np
 
 from .utils import isin_nb
@@ -16,7 +16,7 @@ def random_split(x):
     return x[left_ids], x[~left_ids]
 
 
-@njit(fastmath=True, inline='always', boundscheck=False)
+@njit#(fastmath=True, inline='always', boundscheck=False)
 def bincount(data, n):
     counts = np.zeros(n, dtype=np.int64)
     for j in prange(data.size):
@@ -83,7 +83,7 @@ def gain(left_counts, right_counts, imp_measure):
         return -np.Inf
 
 
-@njit(fastmath=True, inline='always')
+@njit#(fastmath=True, inline='always')
 def gini_gain(left_counts, right_counts, n):
     total_left = 0
     total_right = 0

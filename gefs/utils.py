@@ -7,7 +7,7 @@ import numpy as np
 import scipy.stats as stats
 from .statsutils import chi_test, kruskal, kendalltau
 
-# Import erfinv from scipy special into numba
+#Import erfinv from scipy special into numba
 addr = get_cython_function_address("scipy.special.cython_special", "erfinv")
 functype = ctypes.CFUNCTYPE(ctypes.c_double, ctypes.c_double)
 erfinv_fn = functype(addr)
@@ -32,7 +32,7 @@ def resample_strat(x, y, n_classes):
     x, y: numpy arrays
         In-bag samples.
     """
-    idx = np.arange(x.shape[0], dtype=np.int64)
+    idx = np.arange(x.shape[0])#, dtype=np.int64)
     counts = bincount(y, n_classes)
     selected_idx = np.empty(0, dtype=np.int64)
     for i in range(n_classes):

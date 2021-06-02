@@ -1,5 +1,5 @@
-from numba import njit, boolean, int64, float64, optional
-from numba.experimental import jitclass
+from numba import njit, boolean, int64, float64, optional, jitclass #jitclass to resolve error
+#from numba.experimental import jitclass
 import numpy as np
 
 

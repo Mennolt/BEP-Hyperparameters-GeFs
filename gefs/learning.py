@@ -1,5 +1,5 @@
-from numba import njit, float64, int64, optional
-from numba.experimental import jitclass
+from numba import njit, float64, int64, optional, jitclass
+#from numba.experimental import jitclass
 import numpy as np
 
 from .cluster import cluster

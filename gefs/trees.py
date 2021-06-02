@@ -1,8 +1,8 @@
 from math import floor
 import numba as nb
-from numba import njit, int16, int64, float64, optional, prange, deferred_type, types, boolean
+from numba import njit, int16, int64, float64, optional, prange, deferred_type, types, boolean, jitclass
 from numba.typed import List
-from numba.experimental import jitclass
+#from numba.experimental import jitclass
 import numpy as np
 import operator
 import random
@@ -146,7 +146,7 @@ def build_tree(tree, parent, counts, ordered_ids):
     return root, n_nodes
 
 
-@njit(parallel=True)
+@njit#(parallel=True)
 def build_forest(X, y, n_estimators, bootstrap, ncat, imp_measure,
                  min_samples_split, min_samples_leaf, max_features, max_depth,
                  surrogate):
@@ -194,7 +194,7 @@ def add_split(tree_node, pc_node, ncat, root=False):
     n_points_left = len(tree_node.split.left_ids)
     n_points_right = len(tree_node.split.right_ids)
     lp = np.sum(np.where(ncat==1, 0, ncat)) * 1e-6 # LaPlace counts
-    scope = np.arange(len(ncat), dtype=np.int64)
+    scope = np.arange(len(ncat))#, dtype=np.int64)
     if root:
         sumnode = pc_node
     else:
@@ -441,7 +441,7 @@ class Tree:
             self.max_features = X.shape[1]
 
         counts = bincount(y, self.ncat[-1])
-        ordered_ids = np.arange(X.shape[0], dtype=np.int64)
+        ordered_ids = np.arange(X.shape[0])#, dtype=np.int64)
         self.root, self.n_nodes = build_tree(self, None, counts, ordered_ids)
 
     def get_node(self, id):
